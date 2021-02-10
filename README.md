@@ -20,8 +20,8 @@ Wikipedia article.
 
 If you run 
 ```
-./wiki_app.py <query> 
-./wiki_app.py "phrase" 
+./wiki <query> 
+./wiki "phrase" 
 ```
 than it will try to find the artical by *query* or *phrase* key. Finally it suggest you to choose
 the article from the best matches.
