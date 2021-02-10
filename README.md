@@ -15,8 +15,10 @@ pip install wikipedia
 
 ## Usage
 
-If you just execute a file without arguments, than it will find for you a random
-Wikipedia article.
+```
+./wiki
+```
+It will find for you a random Wikipedia article.
 
 If you run 
 ```
