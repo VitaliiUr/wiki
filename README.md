@@ -1,2 +1,27 @@
 # wiki
-Application for the searching of Wikipedia article from the console
+Application for the searching and reading Wikipedia articles from the console.
+It is a wrapper for the wikipedia package from https://pypi.org/project/wikipedia/
+
+## REQUIREMENTS
+
+- python 3
+- wikipedia
+
+The wikipedia package can be installed with
+
+```
+pip install wikipedia 
+```
+
+## Usage
+
+If you just execute a file without arguments, than it will find for you a random
+Wikipedia article.
+
+If you run 
+```
+./wiki_app.py <query> 
+./wiki_app.py "phrase" 
+```
+than it will try to find the artical by *query* or *phrase* key. Finally it suggest you to choose
+the article from the best matches.

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import wikipedia as wiki
 import re
 import sys
@@ -27,12 +27,12 @@ def search_title(search):
 
     titles = wiki.search(search)
     print("We found such articles:\n")
-    print(*[f"\"{t}\","for t in titles[:5]])
+    print(*[f"\"{t}\","for t in titles[:5]], "\n")
 
     for title in titles:
-        ans = input(
-            "Did you mean \"{}\"?\n(Press any key if yes or \"n\" if you want to see next suggestion)\n\
-                Press \"q\" to quit".format(title))
+        print("Did you mean \"{}\"?\n Press any key if yes or \"n\"".format(title),
+              "if you want to see next suggestion")
+        ans = input("Press \"q\" to quit")
         if ans in ("n", "next"):
             continue
         elif ans == "q":
@@ -43,13 +43,17 @@ def search_title(search):
 
 
 def split_paragraphs(text):
+
+    text = re.sub(r"\s{2,}", " ", text)
+
+
     pat = re.compile(
-        r"(?:(?:(?:\n+)?)(?:\s?)(?:=+)(?:\s?)(?:[.\w\s]+)(?:\s?)(?:=+)(?:(?:\n+)?))+")
+        r"(?:(?:(?:\n+)?)(?:\s?)(?:={2,})(?:\s*?)(?:.+)(?:\s*?)(?:={2,})(?:(?:\n+)?))+")
 
     paragraphs = pat.split(text)
 
-    pat2 = pat = re.compile(
-        r"(?:(?:(?:\n+)?)(?:\s?)(?:=+)(?:\s?)([.\w\s]+)(?:\s?)(?:=+)(?:(?:\n+)?))+")
+    pat2 = re.compile(
+        r"(?:(?:(?:\n+)?)(?:\s?)(?:={2,})(?:\s?)(.+)(?:\s?)(?:={2,})(?:(?:\n+)?))")
 
     titles = list(map(lambda x: x.strip(), ["Summary"] + pat2.findall(text)))
 
@@ -64,7 +68,7 @@ if __name__ == "__main__":
     keyPressed = None
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--search", type=str,
+    parser.add_argument("search", type=str, nargs='?',
                         help="search wiki article by title")
     args = parser.parse_args()
 
@@ -73,7 +77,7 @@ if __name__ == "__main__":
     else:
         name = get_random_title()
 
-    print("Article is loading. Please, wait")
+    print("Article is loading. Please, wait...")
     page = wiki.page(name)
 
     paragraphs = split_paragraphs(page.content)
