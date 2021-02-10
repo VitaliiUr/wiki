@@ -26,17 +26,17 @@ def get_random_title():
 def search_title(search):
 
     titles = wiki.search(search)
-    print("We found such articles:\n")
+    print(">>> We found such articles:\n")
     print(*[f"\"{t}\","for t in titles[:5]], "\n")
 
     for title in titles:
-        print("Did you mean \"{}\"?\n Press any key if yes or \"n\"".format(title),
+        print(">>> Did you mean \"{}\"?\n Press any key if yes or \"n\"".format(title),
               "if you want to see next suggestion")
         ans = input("Press \"q\" to quit")
         if ans in ("n", "next"):
             continue
         elif ans == "q":
-            print("sorry for that")
+            print(">>> Sorry for that. Bye")
             sys.exit(0)
         else:
             return title
@@ -77,8 +77,12 @@ if __name__ == "__main__":
     else:
         name = get_random_title()
 
-    print("Article is loading. Please, wait...")
-    page = wiki.page(name)
+    if name:
+        print(">>> Article is loading. Please, wait...")
+        page = wiki.page(name)
+    else:
+        print(">>> Please, try again")
+        sys.exit(0)
 
     paragraphs = split_paragraphs(page.content)
 
