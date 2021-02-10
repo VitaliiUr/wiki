@@ -86,9 +86,8 @@ def split_paragraphs(text):
 
 
 if __name__ == "__main__":
-    global keyPressed
-    keyPressed = None
 
+    # Get arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("search", type=str, nargs='?',
                         help="search wiki article by title")
