@@ -1,6 +1,6 @@
 # wiki
 Application for the searching and reading Wikipedia articles from the console.
-It is a wrapper for the wikipedia package from https://pypi.org/project/wikipedia/
+It wraps a [wikipedia](https://pypi.org/project/wikipedia/).
 
 ## REQUIREMENTS
 
