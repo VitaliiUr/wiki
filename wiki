@@ -108,12 +108,7 @@ if __name__ == "__main__":
 
     paragraphs = split_paragraphs(page.content)
 
-    print("\n")
-    print(">>> Outline:")
-    for title in paragraphs:
-        print("=== ", title, " ===  ")
-    ans = input(
-        "Press any key to proceed, \"q\" to quit")
+    print("\n===== ", name, " =====")
     for title in paragraphs:
         print("\n")
         print("=== ", title, " ===")
