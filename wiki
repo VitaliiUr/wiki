@@ -6,6 +6,14 @@ import argparse
 
 
 def get_random_title():
+    """ Find a random article on the Wikipadia
+    and suggests it to user.
+
+    Returns
+    -------
+    str
+        title of article
+    """
     title = wiki.random()
     print("Random article's title:")
     print(title)
@@ -24,6 +32,18 @@ def get_random_title():
 
 
 def search_title(search):
+    """ Looks for the article by title
+
+    Parameters
+    ----------
+    search : str
+        query for the search
+
+    Returns
+    -------
+    str
+        title of the article
+    """
 
     titles = wiki.search(search)
     print(">>> We found such articles:\n")
@@ -44,19 +64,21 @@ def search_title(search):
 
 def split_paragraphs(text):
 
-    text = re.sub(r"\s{2,}", " ", text)
+    # Remove bad symbols
+    text = re.sub(r"\s{2,}", " ", text.strip())
+    text = re.sub(r"\n{2,}", "\n", text)
 
-
+    # Split article to the paragraphs
     pat = re.compile(
-        r"(?:(?:(?:\n+)?)(?:\s?)(?:={2,})(?:\s*?)(?:.+)(?:\s*?)(?:={2,})(?:(?:\n+)?))+")
-
+        r"(?:(?:\s?)(?:={2,})(?:\s*?)(?:[^=]+)(?:\s*?)(?:={2,}))")
     paragraphs = pat.split(text)
 
+    # Get titles of the paragraphs
     pat2 = re.compile(
-        r"(?:(?:(?:\n+)?)(?:\s?)(?:={2,})(?:\s?)(.+)(?:\s?)(?:={2,})(?:(?:\n+)?))")
-
+        r"(?:(?:\s?)(?:={2,})(?:\s?)([^=]+)(?:\s?)(?:={2,}))")
     titles = list(map(lambda x: x.strip(), ["Summary"] + pat2.findall(text)))
 
+    # Create a dictionary of the paragraphs and return it
     result = dict(zip(titles, paragraphs))
     if "References" in result:
         del result["References"]
@@ -73,9 +95,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.search:
-        name = search_title(args.search)
+        name = search_title(args.search)  # search article by title
     else:
-        name = get_random_title()
+        name = get_random_title()  # get random article
 
     if name:
         print(">>> Article is loading. Please, wait...")
@@ -86,6 +108,12 @@ if __name__ == "__main__":
 
     paragraphs = split_paragraphs(page.content)
 
+    print("\n")
+    print(">>> Outline:")
+    for title in paragraphs:
+        print("=== ", title, " ===  ")
+    ans = input(
+        "Press any key to proceed, \"q\" to quit")
     for title in paragraphs:
         print("\n")
         print("=== ", title, " ===")
